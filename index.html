@@ -128,7 +128,7 @@
     <!-- ==========================================
          JAVASCRIPT (The working code)
          ========================================== -->
-    <script>
+      <script>
         // Store all videos globally
         var allVideos = [];
 
@@ -161,7 +161,6 @@
             var grid = document.getElementById('videoGrid');
             grid.innerHTML = '';
             
-            // Add skeleton loading (optional, nice touch)
             grid.innerHTML = '<div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>';
 
             setTimeout(() => {
@@ -192,7 +191,7 @@
                     `;
                     grid.appendChild(card);
                 });
-            }, 300); // Short delay for the skeleton effect
+            }, 300); 
         }
         
         // Update active category button
@@ -203,32 +202,22 @@
             });
         });
 
-        // CORRECTED Top Navigation & Theme Logic
+        // Top Navigation & Theme Logic
         function scrollToSection(sectionId, btn) {
-            // Remove active from all top buttons
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            // Add active to clicked top button
             btn.classList.add('active');
 
-            // Remove active from all middle filter buttons
             document.querySelectorAll('.category').forEach(b => b.classList.remove('active'));
             
             if (sectionId === 'home') {
-                // Scroll to top
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else if (sectionId === 'videos') {
-                // Show only videos
                 filterVideos('video');
-                // Highlight the middle "Videos" button
                 document.querySelectorAll('.category')[1].classList.add('active');
-                // Scroll to grid
                 document.querySelector('.categories').scrollIntoView({ behavior: 'smooth' });
             } else if (sectionId === 'shorts') {
-                // Show only shorts
                 filterVideos('short');
-                // Highlight the middle "Shorts" button
                 document.querySelectorAll('.category')[2].classList.add('active');
-                // Scroll to grid
                 document.querySelector('.categories').scrollIntoView({ behavior: 'smooth' });
             }
         }
@@ -236,8 +225,12 @@
         function toggleTheme() {
             document.documentElement.classList.toggle('light-theme');
         }
-                // Scroll to Top Button Logic
+
+        // ==========================================
+        // SCROLL TO TOP BUTTON + SHRINKING HEADER
+        // ==========================================
         var scrollTopBtn = document.getElementById('scrollTopBtn');
+        var pageHeader = document.querySelector('header');
 
         window.addEventListener('scroll', function() {
             // Show button if scrolled down more than 300px
@@ -248,11 +241,10 @@
             }
 
             // Shrink Header Logic
-            var header = document.querySelector('header');
             if (window.scrollY > 50) {
-                header.classList.add('shrink');
+                pageHeader.classList.add('shrink');
             } else {
-                header.classList.remove('shrink');
+                pageHeader.classList.remove('shrink');
             }
         });
 
@@ -260,7 +252,9 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
-        <!-- SCROLL TO TOP BUTTON -->
+           <!-- SCROLL TO TOP BUTTON -->
     <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()">↑</button>
+
+</body>
 </body>
 </html>

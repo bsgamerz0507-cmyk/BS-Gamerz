@@ -18,7 +18,7 @@
                 <img src="images/logo-192.png" alt="BS Gamerz Logo" class="site-logo">
                 <span>BS Gamerz</span>
             </div>
-                        <nav>
+            <nav>
                 <button class="nav-btn active" onclick="scrollToSection('home', this)">Home</button>
                 <button class="nav-btn" onclick="scrollToSection('videos', this)">Videos</button>
                 <button class="nav-btn" onclick="scrollToSection('shorts', this)">Shorts</button>
@@ -79,11 +79,11 @@
                 </p>
                 <div class="about-stats">
                     <div class="about-stat">
-                        <span class="about-number">283+</span>
+                        <span class="about-number" id="totalAboutVideos">0</span>
                         <span class="about-label">Total Videos</span>
                     </div>
                     <div class="about-stat">
-                        <span class="about-number">65+</span>
+                        <span class="about-number" id="totalAboutShorts">0</span>
                         <span class="about-label">Shorts</span>
                     </div>
                     <div class="about-stat">
@@ -146,6 +146,10 @@
                 document.getElementById('videoCount').innerText = videoCount;
                 document.getElementById('shortCount').innerText = shortCount;
                 document.getElementById('liveCount').innerText = liveCount;
+                
+                // Update About section numbers
+                document.getElementById('totalAboutVideos').innerText = videoCount;
+                document.getElementById('totalAboutShorts').innerText = shortCount;
 
                 // Show all videos initially
                 filterVideos('all'); 
@@ -198,18 +202,33 @@
                 this.classList.add('active');
             });
         });
-                // Top Navigation & Theme Logic
+
+        // CORRECTED Top Navigation & Theme Logic
         function scrollToSection(sectionId, btn) {
+            // Remove active from all top buttons
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            // Add active to clicked top button
             btn.classList.add('active');
 
+            // Remove active from all middle filter buttons
+            document.querySelectorAll('.category').forEach(b => b.classList.remove('active'));
+            
             if (sectionId === 'home') {
+                // Scroll to top
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else if (sectionId === 'videos') {
-                filterVideos('all'); 
+                // Show only videos
+                filterVideos('video');
+                // Highlight the middle "Videos" button
+                document.querySelectorAll('.category')[1].classList.add('active');
+                // Scroll to grid
                 document.querySelector('.categories').scrollIntoView({ behavior: 'smooth' });
             } else if (sectionId === 'shorts') {
-                filterVideos('short'); 
+                // Show only shorts
+                filterVideos('short');
+                // Highlight the middle "Shorts" button
+                document.querySelectorAll('.category')[2].classList.add('active');
+                // Scroll to grid
                 document.querySelector('.categories').scrollIntoView({ behavior: 'smooth' });
             }
         }

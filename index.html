@@ -125,10 +125,13 @@
         </div>
     </footer>
 
+    <!-- SCROLL TO TOP BUTTON -->
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()">↑</button>
+
     <!-- ==========================================
          JAVASCRIPT (The working code)
          ========================================== -->
-      <script>
+    <script>
         // Store all videos globally
         var allVideos = [];
 
@@ -161,6 +164,7 @@
             var grid = document.getElementById('videoGrid');
             grid.innerHTML = '';
             
+            // Add skeleton loading
             grid.innerHTML = '<div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>';
 
             setTimeout(() => {
@@ -252,9 +256,5 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
-           <!-- SCROLL TO TOP BUTTON -->
-    <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()">↑</button>
-
-</body>
 </body>
 </html>

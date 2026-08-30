@@ -201,8 +201,8 @@
             nextVideos.forEach(function(video) {
                 var card = document.createElement('div');
                 card.className = 'card';
-                card.innerHTML = `
-                    <div class="thumbnail">
+                               card.innerHTML = `
+                    <div class="thumbnail" onmouseenter="playPreview(this, '${video.id}')" onmouseleave="stopPreview(this)">
                         <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank">
                             <img src="${video.thumbnail}" alt="${video.title}" class="youtube-thumbnail">
                         </a>
@@ -297,6 +297,29 @@
                     console.log('ServiceWorker registration failed:', error);
                 });
             });
+        }
+                // YouTube 3-Second Preview
+        function playPreview(element, videoId) {
+            // Only do this on desktop (mouse) not on mobile tap
+            if (window.matchMedia("(hover: hover)").matches) {
+                // Set the inner HTML to the YouTube iframe with autoplay
+                element.innerHTML = `
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&showinfo=0&modestbranding=1&rel=0" 
+                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                `;
+            }
+        }
+
+        function stopPreview(element) {
+            // Reset back to the thumbnail image
+            var videoId = element.querySelector('iframe') ? element.querySelector('iframe').src.split('/embed/')[1].split('?')[0] : '';
+            if (videoId) {
+                element.innerHTML = `
+                    <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
+                        <img src="https://i.ytimg.com/vi/${videoId}/hqdefault.jpg" alt="Video" class="youtube-thumbnail">
+                    </a>
+                `;
+            }
         }
     </script>
 

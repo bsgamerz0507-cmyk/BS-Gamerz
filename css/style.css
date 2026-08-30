@@ -3063,3 +3063,15 @@ html.light-theme .card-meta .content-type {
 .thumbnail:hover a {
     display: none;
 }
+/* YouTube Preview Iframe */
+.thumbnail iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    pointer-events: none; /* Prevents clicking inside the preview */
+}
+
+/* Hide the anchor when preview is playing */
+.thumbnail:hover a {
+    display: none;
+}

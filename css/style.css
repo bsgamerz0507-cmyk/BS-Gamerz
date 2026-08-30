@@ -2921,3 +2921,20 @@ html.light-theme .about-label {
         justify-content: center;
     }
 }
+/* Date and Meta styling */
+.card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.card-meta .date {
+    color: #999;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+html.light-theme .card-meta .date {
+    color: #666;
+}

@@ -113,10 +113,10 @@
                     <a href="https://www.instagram.com/bsgamerz2">Instagram</a>
                 </div>
             </div>
-            <div class="footer-section">
+                       <div class="footer-section">
                 <h3>Support</h3>
                 <div class="contact-info">
-                    <div>📧 Contact via Instagram</div>
+                    <a href="mailto:bsgamerz0507@gmail.com">📧 your-email@gmail.com</a>
                 </div>
             </div>
         </div>
@@ -156,9 +156,10 @@
             })
             .catch(error => console.log('Could not load videos:', error));
 
-        // Function to format the date nicely
+        // Function to format the date nicely (Fixes the Timezone issue)
         function formatDate(dateString) {
             const date = new Date(dateString);
+            // Option 1: Just the date (e.g., Aug 25, 2026)
             return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
         }
 
@@ -180,7 +181,7 @@
                 filteredVideos.forEach(function(video) {
                     var card = document.createElement('div');
                     card.className = 'card';
-                    // Added the date inside the card-content
+                    // Added the formatted date
                     card.innerHTML = `
                         <div class="thumbnail">
                             <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank">
@@ -190,7 +191,7 @@
                         <div class="card-content">
                             <div class="card-meta">
                                 <span class="content-type">${video.type.toUpperCase()}</span>
-                                <span class="date">${formatDate(video.publishedAt)}</span>
+                                <span class="date">📅 ${formatDate(video.publishedAt)}</span>
                             </div>
                             <h3>${video.title}</h3>
                             <div class="card-footer">
@@ -260,7 +261,7 @@
         }
 
         // ==========================================
-        // PWA INSTALLATION (MAKE IT AN APP)
+        // PWA INSTALLATION
         // ==========================================
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {

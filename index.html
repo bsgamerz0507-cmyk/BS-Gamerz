@@ -58,6 +58,10 @@
 
         <div class="content-grid" id="videoGrid">
         </div>
+                <!-- LOAD MORE BUTTON -->
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="watch-btn" id="loadMoreBtn" onclick="loadMore()" style="font-size: 18px; padding: 12px 30px;">Load More Videos</button>
+        </div>
     </div>
 
     <section class="about-creator">
@@ -123,6 +127,9 @@
 
     <script>
         // Store all videos globally
+        var videosPerPage = 30;
+        var currentFilter = 'all';
+        var currentCount = 0;
         var allVideos = [];
 
         // Load videos and store them
@@ -153,7 +160,10 @@
         }
 
         // Filter videos by type
+               // Filter videos by type
         function filterVideos(type) {
+            currentFilter = type;
+            currentCount = 0;
             var grid = document.getElementById('videoGrid');
             grid.innerHTML = '';
             
@@ -161,36 +171,51 @@
 
             setTimeout(() => {
                 grid.innerHTML = '';
-
-                var filteredVideos = allVideos.filter(function(video) {
-                    if (type === 'all') return true;
-                    return video.type === type;
-                });
-
-                filteredVideos.forEach(function(video) {
-                    var card = document.createElement('div');
-                    card.className = 'card';
-                    
-                    card.innerHTML = `
-                        <div class="thumbnail">
-                            <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank">
-                                <img src="${video.thumbnail}" alt="${video.title}" class="youtube-thumbnail">
-                            </a>
-                        </div>
-                        <div class="card-content">
-                            <div class="card-meta">
-                                <span class="content-type">${video.type.toUpperCase()}</span>
-                                <span class="date">📅 ${formatDate(video.publishedAt)}</span>
-                            </div>
-                            <h3>${video.title}</h3>
-                            <div class="card-footer">
-                                <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" class="watch-btn">Watch</a>
-                            </div>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                });
+                loadMore(); 
             }, 300); 
+        }
+
+        function loadMore() {
+            var grid = document.getElementById('videoGrid');
+            var filteredVideos = allVideos.filter(function(video) {
+                if (currentFilter === 'all') return true;
+                return video.type === currentFilter;
+            });
+
+            // Get the next 30 videos
+            var nextVideos = filteredVideos.slice(currentCount, currentCount + videosPerPage);
+            
+            // Show them
+            nextVideos.forEach(function(video) {
+                var card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="thumbnail">
+                        <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank">
+                            <img src="${video.thumbnail}" alt="${video.title}" class="youtube-thumbnail">
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span class="content-type">${video.type.toUpperCase()}</span>
+                            <span class="date">📅 ${formatDate(video.publishedAt)}</span>
+                        </div>
+                        <h3>${video.title}</h3>
+                        <div class="card-footer">
+                            <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" class="watch-btn">Watch</a>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+                currentCount++;
+            });
+
+            // Hide button if no more videos
+            if (currentCount >= filteredVideos.length) {
+                document.getElementById('loadMoreBtn').style.display = 'none';
+            } else {
+                document.getElementById('loadMoreBtn').style.display = 'block';
+            }
         }
         
         // Update active category button
@@ -261,6 +286,7 @@
                 });
             });
         }
+
     </script>
 </body>
 </html>

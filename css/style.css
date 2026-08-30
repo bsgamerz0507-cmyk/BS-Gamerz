@@ -2938,22 +2938,42 @@ html.light-theme .about-label {
 html.light-theme .card-meta .date {
     color: #666;
 }
-/* FINAL DATE FORCING */
+/* FINAL CARD AND DATE STYLING */
 .card-meta {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
     margin-bottom: 8px !important;
     width: 100% !important;
-    padding: 0 15px !important;
+}
+
+.card-content {
+    background-color: #1e1e1e !important;
+    padding: 15px !important;
+    border-radius: 0 0 16px 16px !important;
+}
+
+.card-meta .content-type {
+    display: block !important;
+    color: #ccc !important;
+    background: #2a2a2a !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
 }
 
 .card-meta .date {
     display: block !important;
-    color: #cccccc !important;
-    font-size: 14px !important;
+    color: #ffffff !important;
+    font-size: 13px !important;
     font-weight: normal !important;
-    font-family: sans-serif !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+}
+
+html.light-theme .card-content {
+    background-color: #ffffff !important;
+}
+
+html.light-theme .card-meta .date {
+    color: #333333 !important;
 }

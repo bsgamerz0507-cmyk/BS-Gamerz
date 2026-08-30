@@ -64,7 +64,8 @@
         <div class="content-grid" id="videoGrid">
             <!-- Videos will be loaded here by JavaScript -->
         </div>
-                <!-- LOAD MORE BUTTON -->
+
+        <!-- LOAD MORE BUTTON -->
         <div style="text-align: center; margin-top: 30px;">
             <button class="watch-btn" id="loadMoreBtn" onclick="loadMore()" style="font-size: 18px; padding: 12px 30px;">Load More Videos</button>
         </div>
@@ -118,10 +119,10 @@
                     <a href="https://www.instagram.com/bsgamerz2">Instagram</a>
                 </div>
             </div>
-                       <div class="footer-section">
+            <div class="footer-section">
                 <h3>Support</h3>
                 <div class="contact-info">
-                    <a href="mailto:bsgamerz0507@gmail.com">📧 your-email@gmail.com</a>
+                    <a href="mailto:your-email@gmail.com">📧 your-email@gmail.com</a>
                 </div>
             </div>
         </div>
@@ -133,12 +134,12 @@
     <!-- SCROLL TO TOP BUTTON -->
     <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()">↑</button>
 
-    <!-- ==========================================
-         JAVASCRIPT (The working code)
-         ========================================== -->
     <script>
         // Store all videos globally
         var allVideos = [];
+        var videosPerPage = 30;
+        var currentFilter = 'all';
+        var currentCount = 0;
 
         // Load videos and store them
         fetch('data/youtube.json')
@@ -167,15 +168,10 @@
             return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
         }
 
-               // How many videos to show at a time
-        var videosPerPage = 30;
-        var currentFilter = 'all';
-        var currentCount = 0;
-
         // Filter videos by type
         function filterVideos(type) {
             currentFilter = type;
-            currentCount = 0; // Reset counter when switching tabs
+            currentCount = 0;
             var grid = document.getElementById('videoGrid');
             grid.innerHTML = '';
             
@@ -183,7 +179,7 @@
 
             setTimeout(() => {
                 grid.innerHTML = '';
-                loadMore(); // Load the first 30
+                loadMore();
             }, 300); 
         }
 
@@ -194,14 +190,13 @@
                 return video.type === currentFilter;
             });
 
-            // Get the next 30 videos
             var nextVideos = filteredVideos.slice(currentCount, currentCount + videosPerPage);
             
-            // Show them
             nextVideos.forEach(function(video) {
                 var card = document.createElement('div');
                 card.className = 'card';
-                                    card.innerHTML = `
+                
+                card.innerHTML = `
                     <div class="thumbnail" onmouseenter="playPreview(this, '${video.id}')" onmouseleave="stopPreview(this)">
                         <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank">
                             <img src="${video.thumbnail}" alt="${video.title}" class="youtube-thumbnail">
@@ -218,12 +213,10 @@
                         </div>
                     </div>
                 `;
-                `;
                 grid.appendChild(card);
                 currentCount++;
             });
 
-            // Hide button if no more videos
             if (currentCount >= filteredVideos.length) {
                 document.getElementById('loadMoreBtn').style.display = 'none';
             } else {
@@ -288,6 +281,29 @@
         }
 
         // ==========================================
+        // YOUTUBE 3-SECOND PREVIEW
+        // ==========================================
+        function playPreview(element, videoId) {
+            if (window.matchMedia("(hover: hover)").matches) {
+                element.innerHTML = `
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&showinfo=0&modestbranding=1&rel=0" 
+                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                `;
+            }
+        }
+
+        function stopPreview(element) {
+            var videoId = element.querySelector('iframe') ? element.querySelector('iframe').src.split('/embed/')[1].split('?')[0] : '';
+            if (videoId) {
+                element.innerHTML = `
+                    <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
+                        <img src="https://i.ytimg.com/vi/${videoId}/hqdefault.jpg" alt="Video" class="youtube-thumbnail">
+                    </a>
+                `;
+            }
+        }
+
+        // ==========================================
         // PWA INSTALLATION
         // ==========================================
         if ('serviceWorker' in navigator) {
@@ -299,54 +315,6 @@
                 });
             });
         }
-                // YouTube 3-Second Preview
-        function playPreview(element, videoId) {
-            // Only do this on desktop (mouse) not on mobile tap
-            if (window.matchMedia("(hover: hover)").matches) {
-                // Set the inner HTML to the YouTube iframe with autoplay
-                element.innerHTML = `
-                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&showinfo=0&modestbranding=1&rel=0" 
-                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                `;
-            }
-        }
-
-        function stopPreview(element) {
-            // Reset back to the thumbnail image
-            var videoId = element.querySelector('iframe') ? element.querySelector('iframe').src.split('/embed/')[1].split('?')[0] : '';
-            if (videoId) {
-                element.innerHTML = `
-                    <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
-                        <img src="https://i.ytimg.com/vi/${videoId}/hqdefault.jpg" alt="Video" class="youtube-thumbnail">
-                    </a>
-                `;
-            }
-        }
-                // YouTube 3-Second Preview
-        function playPreview(element, videoId) {
-            // Only do this on desktop (mouse) not on mobile tap
-            if (window.matchMedia("(hover: hover)").matches) {
-                // Set the inner HTML to the YouTube iframe with autoplay
-                element.innerHTML = `
-                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&showinfo=0&modestbranding=1&rel=0" 
-                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                `;
-            }
-        }
-
-        function stopPreview(element) {
-            // Reset back to the thumbnail image
-            var videoId = element.querySelector('iframe') ? element.querySelector('iframe').src.split('/embed/')[1].split('?')[0] : '';
-            if (videoId) {
-                element.innerHTML = `
-                    <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank">
-                        <img src="https://i.ytimg.com/vi/${videoId}/hqdefault.jpg" alt="Video" class="youtube-thumbnail">
-                    </a>
-                `;
-            }
-        }
     </script>
-
 </body>
-
 </html>

@@ -18,11 +18,11 @@
                 <img src="images/logo-192.png" alt="BS Gamerz Logo" class="site-logo">
                 <span>BS Gamerz</span>
             </div>
-            <nav>
-                <button class="nav-btn active">Home</button>
-                <button class="nav-btn">Videos</button>
-                <button class="nav-btn">Shorts</button>
-                <button class="settings-btn">⚙️ Settings</button>
+                        <nav>
+                <button class="nav-btn active" onclick="scrollToSection('home', this)">Home</button>
+                <button class="nav-btn" onclick="scrollToSection('videos', this)">Videos</button>
+                <button class="nav-btn" onclick="scrollToSection('shorts', this)">Shorts</button>
+                <button class="nav-btn" onclick="toggleTheme()">🌙 Theme</button>
             </nav>
         </div>
     </header>
@@ -198,6 +198,25 @@
                 this.classList.add('active');
             });
         });
+                // Top Navigation & Theme Logic
+        function scrollToSection(sectionId, btn) {
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            if (sectionId === 'home') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (sectionId === 'videos') {
+                filterVideos('all'); 
+                document.querySelector('.categories').scrollIntoView({ behavior: 'smooth' });
+            } else if (sectionId === 'shorts') {
+                filterVideos('short'); 
+                document.querySelector('.categories').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function toggleTheme() {
+            document.documentElement.classList.toggle('light-theme');
+        }
     </script>
 </body>
 </html>

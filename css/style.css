@@ -2942,18 +2942,48 @@ html.light-theme .card-meta .date {
    ABSOLUTE FINAL CARD META FIX
    ========================================== */
 
-/* Force the meta area to show */
+/* ==========================================
+   ABSOLUTE FINAL CARD FIX (SEPARATED TEXT)
+   ========================================== */
+
+/* 1. The main card */
+.card {
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+}
+
+/* 2. Make sure the thumbnail stays at the top and doesn't overlap */
+.card .thumbnail {
+    width: 100% !important;
+    height: 200px !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* 3. The text area needs its own solid background and separation */
+.card-content {
+    background-color: #181818 !important;
+    position: relative !important;
+    z-index: 10 !important;
+    margin-top: -5px !important; /* Pull it slightly up to look seamless */
+    padding: 15px !important;
+    display: block !important;
+}
+
+/* 4. The meta area (Date and Badge) */
 .card-meta {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
     gap: 10px !important;
-    padding: 10px 0 !important;
+    padding-bottom: 10px !important;
     border-bottom: 1px solid #333 !important;
     margin-bottom: 10px !important;
 }
 
-/* Force the type badge to show */
+/* 5. The badge */
 .card-meta .content-type {
     background: #ff0000 !important;
     color: #ffffff !important;
@@ -2965,7 +2995,7 @@ html.light-theme .card-meta .date {
     line-height: 1.2 !important;
 }
 
-/* Force the date to show in pure white */
+/* 6. The date */
 .card-meta .date {
     color: #ffffff !important;
     background: transparent !important;
@@ -2976,13 +3006,6 @@ html.light-theme .card-meta .date {
     margin: 0 !important;
     padding: 0 !important;
     border: none !important;
-}
-
-/* Force the content area to be visible */
-.card-content {
-    background-color: #181818 !important;
-    display: block !important;
-    padding: 15px !important;
 }
 
 /* Light Mode Fixes */

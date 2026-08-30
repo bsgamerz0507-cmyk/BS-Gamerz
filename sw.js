@@ -1,17 +1,6 @@
-const CACHE_NAME = 'bs-gamerz-offline-v1';
-const urlsToCache = [
-  './',
-  './index.html',
-  './css/style.css',
-  './manifest.json',
-  './images/logo-192.png'
-];
+const CACHE_NAME = 'bs-gamerz-v2';
 
 self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
-  );
   self.skipWaiting();
 });
 
@@ -30,13 +19,16 @@ self.addEventListener('activate', event => {
 });
 
 self.addEventListener('fetch', event => {
+  // Network-first strategy (Always try to get the newest version, fall back to cache if offline)
   event.respondWith(
-    caches.match(event.request)
+    fetch(event.request)
       .then(response => {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, copy);
+        });
+        return response;
       })
+      .catch(() => caches.match(event.request))
   );
 });

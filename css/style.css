@@ -2938,3 +2938,22 @@ html.light-theme .about-label {
 html.light-theme .card-meta .date {
     color: #666;
 }
+/* FINAL DATE FORCING */
+.card-meta {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 8px !important;
+    width: 100% !important;
+    padding: 0 15px !important;
+}
+
+.card-meta .date {
+    display: block !important;
+    color: #cccccc !important;
+    font-size: 14px !important;
+    font-weight: normal !important;
+    font-family: sans-serif !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}

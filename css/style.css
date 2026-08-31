@@ -3075,3 +3075,59 @@ html.light-theme .card-meta .content-type {
 .thumbnail:hover a {
     display: none;
 }
+/* ==========================================
+   SPLASH SCREEN ANIMATION
+   ========================================== */
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0f0f0f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    transition: opacity 0.8s ease;
+}
+
+.splash-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #ff0000;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+    animation: splashPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes splashPulse {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+/* When the site loads, this class makes it disappear */
+#splash-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+html.light-theme #splash-screen {
+    background-color: #f5f5f5;
+}
+/* ==========================================
+   STAGGERED CARD ANIMATIONS
+   ========================================== */
+.card {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: cardPopIn 0.5s ease-out forwards;
+}
+
+@keyframes cardPopIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

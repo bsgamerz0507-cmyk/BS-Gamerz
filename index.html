@@ -10,7 +10,10 @@
     <link rel="icon" href="images/logo-192.png" type="image/png">
 </head>
 <body>
-
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <img src="images/logo-192.png" alt="BS Gamer_z Logo" class="splash-logo">
+    </div>
     <header>
         <div class="header-content">
             <div class="logo">
@@ -206,6 +209,8 @@
                         </div>
                     </div>
                 `;
+                               // Add animation delay based on its position
+                card.style.animationDelay = (currentCount * 0.05) + 's';
                 grid.appendChild(card);
                 currentCount++;
             });
@@ -286,7 +291,18 @@
                 });
             });
         }
-
+        // ==========================================
+        // SPLASH SCREEN
+        // ==========================================
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                var splash = document.getElementById('splash-screen');
+                splash.classList.add('hidden');
+                setTimeout(function() {
+                    splash.style.display = 'none';
+                }, 800);
+            }, 1500); // Logo shows for 1.5 seconds
+        });
     </script>
 </body>
 </html>

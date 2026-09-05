@@ -218,13 +218,17 @@
         });
 
         // Top Navigation & Theme Logic
-        function scrollToSection(sectionId, btn) {
+               function scrollToSection(sectionId, btn) {
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
             document.querySelectorAll('.category').forEach(b => b.classList.remove('active'));
             
             if (sectionId === 'home') {
+                // Show EVERYTHING (same as the "All" tab)
+                filterVideos('all');
+                // Highlight the "All" button
+                document.querySelectorAll('.category')[0].classList.add('active');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else if (sectionId === 'videos') {
                 filterVideos('video');

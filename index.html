@@ -176,18 +176,12 @@
             }
         }
                // Filter videos by type
+                // Filter videos by type
         function filterVideos(type) {
             currentFilter = type;
             currentCount = 0;
             var grid = document.getElementById('videoGrid');
             grid.innerHTML = '';
-            
-            // Add/Remove 'shorts-mode' class based on the type
-            if (type === 'short') {
-                grid.classList.add('shorts-mode');
-            } else {
-                grid.classList.remove('shorts-mode');
-            }
             
             grid.innerHTML = '<div class="skeleton-card"></div><div class="skeleton-card"></div><div class="skeleton-card"></div>';
 

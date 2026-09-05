@@ -201,8 +201,8 @@
                             <span class="date">📅 ${formatDate(video.publishedAt)}</span>
                         </div>
                         <h3>${video.title}</h3>
-                                                    <div class="card-footer">
-                                <span class="views">👁️ ${formatViews(video.viewCount)} views</span>
+                                                       <div class="card-footer">
+                                ${video.viewCount ? `<span class="views">👁️ ${formatViews(video.viewCount)} views</span>` : `<span class="views"></span>`}
                                 <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" class="watch-btn">Watch</a>
                             </div>
                     </div>

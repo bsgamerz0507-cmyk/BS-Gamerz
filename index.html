@@ -337,6 +337,25 @@
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+                // Load Channel Stats (Subscribers & Total Views)
+        fetch('data/channel.json')
+            .then(response => response.json())
+            .then(data => {
+                var subs = parseInt(data.subscriberCount);
+                var views = parseInt(data.viewCount);
+                
+                // Format numbers (e.g. 15000 -> 15K)
+                document.getElementById('subscriberCount').innerText = formatNumber(subs);
+                document.getElementById('totalChannelViews').innerText = formatNumber(views);
+            })
+            .catch(error => console.log('Could not load channel stats:', error));
+
+        // Format large numbers (e.g. 15000 -> 15K)
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num;
+        }
     </script>
 </body>
 </html>

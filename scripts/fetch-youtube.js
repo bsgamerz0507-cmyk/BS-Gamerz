@@ -5,7 +5,7 @@ const path = require('path');
 const API_KEY = 'AIzaSyBIWm0A_MEffFfVpuGTdkopkaOo4ppPz5g'; 
 const CHANNEL_ID = 'UC_DHq9eu17O5QFfVvne1Htg';
 
-async function fetchAllVideos() {
+async function main() {
     console.log('🔍 Starting full YouTube sync...');
     let allVideos = [];
     let nextPageToken = '';
@@ -56,7 +56,7 @@ async function fetchAllVideos() {
     
     console.log(`✅ Received details for ${videoDataItems.length} videos`);
 
-    // 5. Create the final JSON structure (FIXED the duration logic)
+    // 5. Create the final JSON structure
     const finalVideos = videoDataItems.map(item => {
         const durationSeconds = item.contentDetails ? parseDuration(item.contentDetails.duration) : 0;
         return {
@@ -67,7 +67,7 @@ async function fetchAllVideos() {
             publishedAt: item.snippet.publishedAt,
             duration: item.contentDetails ? item.contentDetails.duration : '',
             durationSeconds: durationSeconds,
-            type: durationSeconds < 60 ? 'short' : 'video', // ✅ 60 seconds or more is a Video
+            type: durationSeconds < 60 ? 'short' : 'video',
             isShort: durationSeconds < 60,
             isLive: item.snippet.liveBroadcastContent === 'live',
             channelId: item.snippet.channelId,
@@ -87,8 +87,23 @@ async function fetchAllVideos() {
     
     fs.writeFileSync(outputPath, JSON.stringify(jsonData, null, 2));
     console.log(`✅ Saved ${finalVideos.length} videos to data/youtube.json`);
+
+    // 7. Fetch channel stats and save them
+    const statsRes = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`);
+    const statsData = await statsRes.json();
     
-    // 7. Print breakdown
+    if (statsData.items && statsData.items.length > 0) {
+        const channelStats = {
+            subscriberCount: statsData.items[0].statistics.subscriberCount,
+            viewCount: statsData.items[0].statistics.viewCount
+        };
+        
+        const statsPath = path.join(__dirname, '..', 'data', 'channel.json');
+        fs.writeFileSync(statsPath, JSON.stringify(channelStats, null, 2));
+        console.log('✅ Saved channel stats to data/channel.json');
+    }
+
+    // 8. Print breakdown
     const shorts = finalVideos.filter(v => v.type === 'short').length;
     const videos = finalVideos.filter(v => v.type === 'video').length;
     const live = finalVideos.filter(v => v.isLive).length;
@@ -108,6 +123,6 @@ function parseDuration(isoDuration) {
 }
 
 // Run the function
-fetchAllVideos().catch(error => {
+main().catch(error => {
     console.error('❌ Fatal error:', error);
 });

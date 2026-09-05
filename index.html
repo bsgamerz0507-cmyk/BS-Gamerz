@@ -45,6 +45,10 @@
     </div>
 
     <div class="container">
+                <!-- SEARCH BAR -->
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Search videos (e.g. Booyah, Headshot)..." onkeyup="searchVideos()">
+        </div>
         <div class="categories">
             <button class="category active" onclick="filterVideos('all')">All</button>
             <button class="category" onclick="filterVideos('video')">🎬 Videos</button>
@@ -218,7 +222,53 @@
                 document.getElementById('loadMoreBtn').style.display = 'block';
             }
         }
-        
+                // ==========================================
+        // SEARCH BAR
+        // ==========================================
+        function searchVideos() {
+            var searchText = document.getElementById('searchInput').value.toLowerCase();
+            var grid = document.getElementById('videoGrid');
+            
+            // If search is empty, show the normal filters
+            if (searchText === '') {
+                filterVideos(currentFilter);
+                return;
+            }
+
+            // Filter videos by title
+            var filteredVideos = allVideos.filter(function(video) {
+                return video.title.toLowerCase().includes(searchText);
+            });
+
+            // Show the results
+            grid.innerHTML = '';
+            filteredVideos.forEach(function(video) {
+                var card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="thumbnail">
+                        <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank">
+                            <img src="${video.thumbnail}" alt="${video.title}" class="youtube-thumbnail">
+                        </a>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-meta">
+                            <span class="content-type">${video.type.toUpperCase()}</span>
+                            <span class="date">📅 ${formatDate(video.publishedAt)}</span>
+                        </div>
+                        <h3>${video.title}</h3>
+                        <div class="card-footer">
+                            <span class="views">👁️ ${formatViews(video.viewCount)} views</span>
+                            <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" class="watch-btn">Watch</a>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // Hide the load more button when searching
+            document.getElementById('loadMoreBtn').style.display = 'none';
+        }
         // Update active category button
         document.querySelectorAll('.category').forEach(btn => {
             btn.addEventListener('click', function() {

@@ -125,6 +125,7 @@ async function syncYouTubeData() {
             description: item.snippet?.description || '',
             thumbnail: item.snippet?.thumbnails?.high?.url || '',
             publishedAt: item.snippet?.publishedAt || new Date().toISOString(),
+                viewCount: video.statistics ? video.statistics.viewCount : 0,
             duration: item.contentDetails.duration || 'PT0S',
             durationSeconds: durationSeconds,
             type: isShort ? 'short' : isLive ? 'live' : 'video',

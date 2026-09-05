@@ -3156,3 +3156,15 @@ html.light-theme .footer-section h3 {
 html.light-theme .footer-section p {
     color: #555555 !important;
 }
+/* View Count Styling */
+.card-footer .views {
+    color: #999;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+html.light-theme .card-footer .views {
+    color: #555;
+}

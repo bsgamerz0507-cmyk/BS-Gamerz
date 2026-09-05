@@ -150,7 +150,16 @@
             const date = new Date(dateString);
             return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
         }
-
+                // Function to format view counts (e.g. 15000 -> 15K)
+        function formatViews(viewCount) {
+            if (viewCount >= 1000000) {
+                return (viewCount / 1000000).toFixed(1) + 'M';
+            } else if (viewCount >= 1000) {
+                return (viewCount / 1000).toFixed(1) + 'K';
+            } else {
+                return viewCount;
+            }
+        }
         // Filter videos by type
         function filterVideos(type) {
             currentFilter = type;
@@ -192,9 +201,10 @@
                             <span class="date">📅 ${formatDate(video.publishedAt)}</span>
                         </div>
                         <h3>${video.title}</h3>
-                        <div class="card-footer">
-                            <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" class="watch-btn">Watch</a>
-                        </div>
+                                                    <div class="card-footer">
+                                <span class="views">👁️ ${formatViews(video.viewCount)} views</span>
+                                <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" class="watch-btn">Watch</a>
+                            </div>
                     </div>
                 `;
                 grid.appendChild(card);

@@ -3131,3 +3131,28 @@ html.light-theme #splash-screen {
         transform: translateY(0);
     }
 }
+/* ==========================================
+   FIX FOOTER BUTTONS IN LIGHT MODE
+   ========================================== */
+
+/* Fix the background and text color for the light theme */
+html.light-theme .social-links a {
+    background: #ffffff !important;
+    color: #222222 !important;
+    border: 1px solid #dddddd !important;
+}
+
+html.light-theme .social-links a:hover {
+    background: #e6e6e6 !important;
+    color: #000000 !important;
+    border-color: #cccccc !important;
+}
+
+/* Also fix the red underline under the footer titles if needed */
+html.light-theme .footer-section h3 {
+    color: #222222 !important;
+}
+
+html.light-theme .footer-section p {
+    color: #555555 !important;
+}

@@ -57,9 +57,9 @@
 
         <div class="content-grid" id="videoGrid">
         </div>
-                <!-- LOAD MORE BUTTON -->
+                      <!-- LOAD MORE BUTTON -->
         <div style="text-align: center; margin-top: 30px;">
-            <button class="watch-btn" id="loadMoreBtn" onclick="loadMore()" style="font-size: 18px; padding: 12px 30px;">Load More Videos</button>
+            <button class="watch-btn" id="loadMoreBtn" onclick="loadMore()" style="font-size: 18px; padding: 12px 30px; display: none;">Load More Videos</button>
         </div>
     </div>
 
@@ -211,8 +211,8 @@
                 currentCount++;
             });
 
-            // Hide button if no more videos
-            if (currentCount >= filteredVideos.length) {
+                       // Hide button if no more videos OR if no videos loaded yet
+            if (currentCount === 0 || currentCount >= filteredVideos.length) {
                 document.getElementById('loadMoreBtn').style.display = 'none';
             } else {
                 document.getElementById('loadMoreBtn').style.display = 'block';

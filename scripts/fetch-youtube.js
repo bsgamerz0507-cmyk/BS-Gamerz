@@ -1,171 +1,113 @@
 const fs = require('fs');
 const path = require('path');
-const https = require('https');
 
-// YouTube API configuration
-const API_KEY = 'AIzaSyBIWm0A_MEffFfVpuGTdkopkaOo4ppPz5g';  // <--- REPLACE THIS WITH YOUR KEY
+// ⚠️ Your actual API key
+const API_KEY = 'AIzaSyBIWm0A_MEffFfVpuGTdkopkaOo4ppPz5g'; 
 const CHANNEL_ID = 'UC_DHq9eu17O5QFfVvne1Htg';
-const MAX_RESULTS = 50;
 
-function parseDuration(duration) {
-  if (!duration) return 0;
-  const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-  const hours = parseInt(match[1] || 0) * 3600;
-  const minutes = parseInt(match[2] || 0) * 60;
-  const seconds = parseInt(match[3] || 0);
-  return hours + minutes + seconds;
-}
-
-function fetchYouTubeData(endpoint, params = '') {
-  return new Promise((resolve, reject) => {
-    const url = `https://www.googleapis.com/youtube/v3/${endpoint}?key=${API_KEY}&${params}`;
-    https.get(url, (res) => {
-      let data = '';
-      res.on('data', chunk => data += chunk);
-      res.on('end', () => {
-        try {
-          const parsed = JSON.parse(data);
-          if (parsed.error) {
-            reject(new Error(parsed.error.message));
-            return;
-          }
-          resolve(parsed);
-        } catch (e) {
-          reject(e);
-        }
-      });
-    }).on('error', reject);
-  });
-}
-
-async function fetchAllVideos(playlistId, pageToken = '') {
-  let allItems = [];
-  let nextPageToken = pageToken;
-
-  while (true) {
-    const params = `playlistId=${playlistId}&part=snippet,contentDetails&maxResults=${MAX_RESULTS}` +
-      (nextPageToken ? `&pageToken=${nextPageToken}` : '');
-
-    const response = await fetchYouTubeData('playlistItems', params);
-
-    if (response.items && response.items.length > 0) {
-      allItems = allItems.concat(response.items);
-    }
-
-    nextPageToken = response.nextPageToken || null;
-    if (!nextPageToken) break;
-
-    console.log(`📦 Fetched ${allItems.length} videos so far...`);
-  }
-
-  return allItems;
-}
-
-async function syncYouTubeData() {
-  try {
+async function fetchAllVideos() {
     console.log('🔍 Starting full YouTube sync...');
-
-    const channelResponse = await fetchYouTubeData(
-      'channels',
-      `id=${CHANNEL_ID}&part=contentDetails`
-    );
-
-    if (!channelResponse.items || channelResponse.items.length === 0) {
-      throw new Error('Channel not found.');
+    let allVideos = [];
+    let nextPageToken = '';
+    
+    // 1. Get the Uploads playlist ID
+    const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`;
+    const channelRes = await fetch(channelUrl);
+    const channelData = await channelRes.json();
+    
+    if (!channelData.items || channelData.items.length === 0) {
+        console.log('❌ Could not find channel! Check your API key or Channel ID.');
+        return;
     }
 
-    const uploadsPlaylistId = channelResponse.items[0].contentDetails.relatedPlaylists.uploads;
-    console.log(`📂 Uploads playlist ID: ${uploadsPlaylistId}`);
+    const playlistId = channelData.items[0].contentDetails.relatedPlaylists.uploads;
+    console.log(`📂 Uploads playlist ID: ${playlistId}`);
 
-    console.log('⏳ Fetching ALL videos...');
-    const allPlaylistItems = await fetchAllVideos(uploadsPlaylistId);
+    // 2. Fetch ALL playlist items
+    do {
+        let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=50&key=${API_KEY}`;
+        if (nextPageToken) url += `&pageToken=${nextPageToken}`;
+        
+        const res = await fetch(url);
+        const data = await res.json();
+        
+        allVideos = allVideos.concat(data.items);
+        nextPageToken = data.nextPageToken || '';
+        
+        console.log(`📦 Fetched ${allVideos.length} videos so far...`);
+    } while (nextPageToken);
 
-    console.log(`✅ Found ${allPlaylistItems.length} total videos in playlist`);
+    console.log(`✅ Found ${allVideos.length} total videos in playlist`);
 
-    if (allPlaylistItems.length === 0) {
-      throw new Error('No videos found.');
-    }
-
-    const videoIds = allPlaylistItems
-      .map(item => item.contentDetails?.videoId)
-      .filter(id => id)
-      .join(',');
-
-    const videoIdChunks = [];
-    const ids = videoIds.split(',');
-    for (let i = 0; i < ids.length; i += 50) {
-      videoIdChunks.push(ids.slice(i, i + 50).join(','));
-    }
-
-    let allVideoDetails = [];
-    for (const chunk of videoIdChunks) {
-      const response = await fetchYouTubeData(
-        'videos',
-        `id=${chunk}&part=contentDetails,snippet,liveStreamingDetails`
-      );
-      if (response.items) {
-        allVideoDetails = allVideoDetails.concat(response.items);
-      }
-    }
-
-    console.log(`✅ Received details for ${allVideoDetails.length} videos`);
-
-    const videos = allVideoDetails
-      .filter(item => item && item.contentDetails && item.contentDetails.duration)
-      .map(item => {
-        try {
-          const durationSeconds = parseDuration(item.contentDetails.duration);
-          const isShort = durationSeconds < 60;
-          const isLive = item.snippet?.liveBroadcastContent === 'live' ||
-                         item.snippet?.liveBroadcastContent === 'upcoming';
-
-          return {
-            id: item.id || 'unknown',
-            title: item.snippet?.title || 'Untitled',
-            description: item.snippet?.description || '',
-            thumbnail: item.snippet?.thumbnails?.high?.url || '',
-            publishedAt: item.snippet?.publishedAt || new Date().toISOString(),
-                viewCount: video.statistics ? video.statistics.viewCount : 0,
-            duration: item.contentDetails.duration || 'PT0S',
-            durationSeconds: durationSeconds,
-            type: isShort ? 'short' : isLive ? 'live' : 'video',
-            isShort: isShort,
-            isLive: isLive,
-            channelId: item.snippet?.channelId || '',
-            channelTitle: item.snippet?.channelTitle || ''
-          };
-        } catch (e) {
-          console.warn('⚠️ Skipping a video due to error:', e.message);
-          return null;
+    // 3. Get ALL video IDs
+    const videoIds = allVideos.map(item => item.snippet.resourceId.videoId);
+    
+    // 4. Fetch video details IN CHUNKS OF 50 (because API limits to 50 per request)
+    let videoDataItems = [];
+    for (let i = 0; i < videoIds.length; i += 50) {
+        const chunk = videoIds.slice(i, i + 50).join(',');
+        const videoRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics,contentDetails&id=${chunk}&key=${API_KEY}`);
+        const videoData = await videoRes.json();
+        if (videoData.items) {
+            videoDataItems = videoDataItems.concat(videoData.items);
         }
-      })
-      .filter(item => item !== null);
-
-    console.log(`✅ Processed ${videos.length} valid videos`);
-
-    const dataPath = path.join(__dirname, '../data/youtube.json');
-    const output = {
-      lastUpdated: new Date().toISOString(),
-      totalVideos: videos.length,
-      videos: videos
-    };
-
-    const dataDir = path.dirname(dataPath);
-    if (!fs.existsSync(dataDir)) {
-      fs.mkdirSync(dataDir, { recursive: true });
+        console.log(`✅ Fetched details for ${videoDataItems.length} videos so far...`);
     }
+    
+    console.log(`✅ Received details for ${videoDataItems.length} videos`);
 
-    fs.writeFileSync(dataPath, JSON.stringify(output, null, 2));
-    console.log(`✅ Saved ${videos.length} videos to data/youtube.json`);
+    // 5. Create the final JSON structure (FIXED the duration logic)
+    const finalVideos = videoDataItems.map(item => {
+        const durationSeconds = item.contentDetails ? parseDuration(item.contentDetails.duration) : 0;
+        return {
+            id: item.id,
+            title: item.snippet.title,
+            description: item.snippet.description || '',
+            thumbnail: item.snippet.thumbnails.high.url,
+            publishedAt: item.snippet.publishedAt,
+            duration: item.contentDetails ? item.contentDetails.duration : '',
+            durationSeconds: durationSeconds,
+            type: durationSeconds < 60 ? 'short' : 'video', // ✅ 60 seconds or more is a Video
+            isShort: durationSeconds < 60,
+            isLive: item.snippet.liveBroadcastContent === 'live',
+            channelId: item.snippet.channelId,
+            channelTitle: item.snippet.channelTitle,
+            // ⭐ THE VIEW COUNT LINE ⭐
+            viewCount: item.statistics ? item.statistics.viewCount : 0
+        };
+    });
+
+    // 6. Save to file
+    const outputPath = path.join(__dirname, '..', 'data', 'youtube.json');
+    const jsonData = {
+        lastUpdated: new Date().toISOString(),
+        totalVideos: finalVideos.length,
+        videos: finalVideos
+    };
+    
+    fs.writeFileSync(outputPath, JSON.stringify(jsonData, null, 2));
+    console.log(`✅ Saved ${finalVideos.length} videos to data/youtube.json`);
+    
+    // 7. Print breakdown
+    const shorts = finalVideos.filter(v => v.type === 'short').length;
+    const videos = finalVideos.filter(v => v.type === 'video').length;
+    const live = finalVideos.filter(v => v.isLive).length;
+    
     console.log('📊 Types breakdown:');
-    console.log(`  - Shorts: ${videos.filter(v => v.type === 'short').length}`);
-    console.log(`  - Videos: ${videos.filter(v => v.type === 'video').length}`);
-    console.log(`  - Live: ${videos.filter(v => v.type === 'live').length}`);
-
-  } catch (error) {
-    console.error('❌ Error:', error.message);
-    process.exit(1);
-  }
+    console.log(`  - Shorts: ${shorts}`);
+    console.log(`  - Videos: ${videos}`);
+    console.log(`  - Live: ${live}`);
 }
 
-syncYouTubeData();
+function parseDuration(isoDuration) {
+    const matches = isoDuration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+    const hours = (matches[1] || '').replace('H', '') || 0;
+    const minutes = (matches[2] || '').replace('M', '') || 0;
+    const seconds = (matches[3] || '').replace('S', '') || 0;
+    return (parseInt(hours) * 3600) + (parseInt(minutes) * 60) + parseInt(seconds);
+}
+
+// Run the function
+fetchAllVideos().catch(error => {
+    console.error('❌ Fatal error:', error);
+});

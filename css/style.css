@@ -3200,42 +3200,42 @@ html.light-theme .search-box input {
     border-color: #ddd;
 }
 /* ==========================================
-   GAME STYLE BORDER FRAME (Match your picture)
+   GAME STYLE RED BORDER FRAME
    ========================================== */
 
 /* 1. The Search Bar */
 .search-box input {
     background: #181818 !important;
     color: #ffffff !important;
-    border: 3px solid #ffffff !important;
-    border-radius: 35px !important; /* Makes it rounded like the picture */
+    border: 3px solid #ff0000 !important;
+    border-radius: 35px !important;
     padding: 15px 25px !important;
     font-size: 16px !important;
     font-weight: bold !important;
     outline: none !important;
-    box-shadow: 0 0 0 3px #0f0f0f, 0 0 0 5px #ffffff, inset 0 0 10px rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 0 0 3px #0f0f0f, 0 0 0 5px #ff0000, inset 0 0 10px rgba(255, 0, 0, 0.2) !important;
 }
 
 html.light-theme .search-box input {
-    background: #f5f5f5 !important;
+    background: #ffffff !important;
     color: #222222 !important;
-    border: 3px solid #222222 !important;
-    box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px #222222, inset 0 0 10px rgba(0, 0, 0, 0.05) !important;
+    border: 3px solid #ff0000 !important;
+    box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px #ff0000, inset 0 0 10px rgba(255, 0, 0, 0.05) !important;
 }
 
 /* 2. The Stats Boxes (Videos & Shorts) */
 .stat-card {
     background: #181818 !important;
-    border: 3px solid #ffffff !important;
+    border: 3px solid #ff0000 !important;
     border-radius: 35px !important;
     padding: 25px !important;
-    box-shadow: 0 0 0 3px #0f0f0f, 0 0 0 5px #ffffff, inset 0 0 10px rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 0 0 3px #0f0f0f, 0 0 0 5px #ff0000, inset 0 0 10px rgba(255, 0, 0, 0.2) !important;
 }
 
 html.light-theme .stat-card {
     background: #ffffff !important;
-    border: 3px solid #222222 !important;
-    box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px #222222, inset 0 0 10px rgba(0, 0, 0, 0.05) !important;
+    border: 3px solid #ff0000 !important;
+    box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px #ff0000, inset 0 0 10px rgba(255, 0, 0, 0.05) !important;
 }
 
 /* Make the numbers pop even more */

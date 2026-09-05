@@ -3,130 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found | BS Gamer_z</title>
-    
-    <!-- Same styles as your main site -->
+    <title>404 - Page Not Found | BS Gamer_z.</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="images/logo.jpeg" type="image/jpeg">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+    <link rel="icon" href="images/logo-192.png" type="image/png">
     <style>
-        /* Special 404 page styling */
-        .error-page {
+        /* Custom styles for the 404 page only */
+        body {
+            background: #0f0f0f;
+            color: #fff;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            min-height: 80vh;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
             text-align: center;
-            padding: 40px 20px;
         }
-
-        .error-code {
-            font-size: 120px;
-            font-weight: 900;
-            color: #ff0000;
-            text-shadow: 0 0 40px rgba(255, 0, 0, 0.3);
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-
-        .error-title {
-            font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #ffffff;
-        }
-
-        .error-message {
-            font-size: 18px;
-            color: #aaaaaa;
-            margin-bottom: 30px;
+        
+        .error-box {
             max-width: 500px;
+            padding: 30px;
         }
-
-        .error-gif {
-            font-size: 80px;
+        
+        .error-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #ff0000;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
             margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
         }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
+        
+        .error-title {
+            font-size: 80px;
+            color: #ff0000;
+            margin: 0;
+            line-height: 1;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
         }
-
+        
+        .error-text {
+            color: #ccc;
+            margin: 15px 0 25px;
+            font-size: 18px;
+        }
+        
         .home-btn {
             display: inline-block;
             background: #ff0000;
-            color: #ffffff;
-            padding: 14px 35px;
-            border-radius: 10px;
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 25px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 18px;
-            transition: 0.3s ease;
+            font-size: 16px;
+            transition: 0.3s;
         }
-
+        
         .home-btn:hover {
             background: #cc0000;
-            transform: scale(1.05);
-        }
-
-        /* Light theme support */
-        html.light-theme .error-title {
-            color: #222222;
-        }
-        html.light-theme .error-message {
-            color: #555555;
+            transform: translateY(-3px);
         }
     </style>
 </head>
 <body>
 
-    <!-- ==========================================
-         HEADER
-         ========================================== -->
-    <header>
-        <div class="logo">
-            <img src="images/logo.jpeg" alt="BS Gamer_z Logo" class="site-logo">
-            <span>BS Gamer_z</span>
-        </div>
-    </header>
-
-    <!-- ==========================================
-         404 ERROR CONTENT
-         ========================================== -->
-    <div class="container error-page">
-        
-        <div class="error-gif">🎮</div>
-        
-        <div class="error-code">404</div>
-        
-        <h1 class="error-title">Oops! You dropped your loot!</h1>
-        
-        <p class="error-message">
-            The page you're looking for doesn't exist or has been moved.<br>
-            Don't worry — the BOOYAH is still waiting for you back home!
-        </p>
-        
-        <a href="/" class="home-btn">
-            <i class="fas fa-home"></i> Return to Home
-        </a>
-        
+    <div class="error-box">
+        <img src="images/logo-192.png" alt="BS Gamer_z." class="error-logo">
+        <h1 class="error-title">404</h1>
+        <p class="error-text">Oops! This page doesn't exist.<br>Looks like you took a wrong turn in the battleground!</p>
+        <a href="./index.html" class="home-btn">🏠 Go Back Home</a>
     </div>
-
-    <!-- ==========================================
-         FOOTER
-         ========================================== -->
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2026 <strong>BS Gamer_z</strong> • Stay gaming, stay grinding!</p>
-        </div>
-    </footer>
 
 </body>
 </html>

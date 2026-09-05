@@ -3243,3 +3243,57 @@ html.light-theme .stat-card {
     color: #ff0000 !important;
     font-size: 28px !important;
 }
+/* ==========================================
+   GLOW EFFECTS
+   ========================================== */
+
+/* Glowing Logo (Header) */
+.site-logo {
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 0, 0, 0.5) !important;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.site-logo:hover {
+    box-shadow: 0 0 25px rgba(255, 0, 0, 1), 0 0 50px rgba(255, 0, 0, 0.7) !important;
+    transform: scale(1.05);
+}
+
+/* Glowing Watch Buttons */
+.watch-btn {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5) !important;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.watch-btn:hover {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8) !important;
+    transform: translateY(-2px);
+}
+
+/* Glowing Category Buttons (All, Videos, Shorts) */
+.category.active {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.6) !important;
+}
+
+.category:hover {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.4) !important;
+}
+
+/* Glowing Nav Buttons (Home, Videos, Shorts, Theme) */
+.nav-btn.active {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.4) !important;
+}
+
+/* Glowing Scroll Top Button */
+.scroll-top-btn {
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7) !important;
+}
+
+/* Glowing Logo inside About Section */
+.about-image img {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), 0 0 40px rgba(255, 0, 0, 0.3) !important;
+}
+
+/* Glowing Back to Top Button */
+.scroll-top-btn:hover {
+    box-shadow: 0 0 25px rgba(255, 0, 0, 1) !important;
+}

@@ -3345,7 +3345,7 @@ html.light-theme .stat-card {
 
 /* Once the animation starts, stop the pulse and add the shrink effect */
 .splash-logo.moving {
-    animation: splashFadeOut 1.2s forwards cubic-bezier(0.6, 0, 0.4, 1);
+    animation: splashFadeOut 2.5s forwards cubic-bezier(0.6, 0, 0.4, 1);
 }
 
 @keyframes splashFadeOut {

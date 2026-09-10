@@ -360,7 +360,7 @@
             if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
             return num;
         }
-                // ==========================================
+               // ==========================================
         // SPLASH SCREEN → HEADER LOGO TRANSITION
         // ==========================================
         window.addEventListener('load', function() {
@@ -370,9 +370,7 @@
             
             if (!splash || !splashLogo || !headerLogo) return;
 
-            // Give the images a moment to load
             setTimeout(function() {
-                
                 // 1. Get the exact pixel position of the header logo
                 var rect = headerLogo.getBoundingClientRect();
                 
@@ -385,15 +383,16 @@
                 var moveX = targetX - startX;
                 var moveY = targetY - startY;
                 
-                // 3. Apply the transform. We need to maintain the -50% base transform AND move it.
-                splashLogo.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px)) scale(0.5)`;
-                splashLogo.style.opacity = '0';
+                // 3. Apply the movement (only translate - CSS handles the fade)
+                splashLogo.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
+                
+                // 4. Add the "moving" class which triggers the fade animation
                 splashLogo.classList.add('moving');
                 
-                // 4. Dissolve the background
+                // 5. Dissolve the background
                 splash.classList.add('hidden');
                 
-                // 5. Fully remove the splash screen after the animation
+                // 6. Fully remove the splash screen after animation
                 setTimeout(function() {
                     splash.classList.add('done');
                 }, 1200);

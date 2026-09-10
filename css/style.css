@@ -3326,7 +3326,7 @@ html.light-theme .stat-card {
     justify-content: center;
     align-items: center;
     z-index: 99999;
-    transition: background-color 0.8s ease;
+    transition: background-color 2.5s ease; /* slow dissolve of background */
 }
 
 .splash-logo {
@@ -3339,30 +3339,24 @@ html.light-theme .stat-card {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: all 1.2s cubic-bezier(0.6, 0, 0.4, 1);
     animation: splashPulse 1.5s ease-in-out infinite;
+    transition: none;
 }
 
-/* Once the animation starts, stop the pulse and add the shrink effect */
+/* When we start moving: make it slower and start shrinking */
 .splash-logo.moving {
-    animation: splashFadeOut 2.5s forwards cubic-bezier(0.6, 0, 0.4, 1);
+    animation: splashPulse 1.5s ease-in-out infinite !important;
+    transition: all 2.5s cubic-bezier(0.6, 0, 0.4, 1) !important;
+    width: 60px;
+    height: 60px;
+    border-width: 2px;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
 }
 
-@keyframes splashFadeOut {
-    0% {
-        width: 120px;
-        height: 120px;
-        opacity: 1;
-        border-width: 3px;
-        box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
-    }
-    100% {
-        width: 60px;
-        height: 60px;
-        opacity: 0;
-        border-width: 2px;
-        box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
-    }
+/* Then, once it's arrived, fade it out */
+.splash-logo.arrived {
+    opacity: 0;
+    transition: opacity 0.5s ease !important;
 }
 
 @keyframes splashPulse {

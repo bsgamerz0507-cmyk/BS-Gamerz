@@ -10,7 +10,10 @@
     <link rel="icon" href="images/logo-192.png" type="image/png">
 </head>
 <body>
-
+        <!-- SPLASH SCREEN -->
+    <div id="splash-screen">
+        <img src="images/logo-192.png" alt="BS Gamer_z Logo" class="splash-logo">
+    </div>
     <header>
         <div class="header-content">
             <div class="logo">
@@ -357,6 +360,20 @@
             if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
             return num;
         }
+                // ==========================================
+        // SPLASH SCREEN → HEADER LOGO TRANSITION
+        // ==========================================
+        window.addEventListener('load', function() {
+            var splash = document.getElementById('splash-screen');
+            if (!splash) return;
+            
+            setTimeout(function() {
+                splash.classList.add('hidden');
+                setTimeout(function() {
+                    splash.classList.add('done');
+                }, 1200);
+            }, 1500);
+        });
     </script>
 </body>
 </html>

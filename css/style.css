@@ -3313,7 +3313,7 @@ html.light-theme .stat-card {
     box-shadow: 0 0 25px rgba(255, 0, 0, 1) !important;
 }
 /* ==========================================
-   SPLASH SCREEN → HEADER LOGO TRANSITION
+   SPLASH SCREEN
    ========================================== */
 #splash-screen {
     position: fixed;
@@ -3335,8 +3335,28 @@ html.light-theme .stat-card {
     border-radius: 50%;
     border: 3px solid #ff0000;
     box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     transition: all 1.2s cubic-bezier(0.6, 0, 0.4, 1);
-    position: relative;
+    animation: splashPulse 1.5s ease-in-out infinite;
+}
+
+/* Once the animation starts, stop the pulse and add the shrink/move effect via JS */
+.splash-logo.moving {
+    animation: none;
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+    border-width: 2px;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+}
+
+@keyframes splashPulse {
+    0% { transform: translate(-50%, -50%) scale(0.9); }
+    50% { transform: translate(-50%, -50%) scale(1.05); }
+    100% { transform: translate(-50%, -50%) scale(0.9); }
 }
 
 #splash-screen.hidden {
@@ -3344,27 +3364,8 @@ html.light-theme .stat-card {
     pointer-events: none;
 }
 
-#splash-screen.hidden .splash-logo {
-    width: 60px;
-    height: 60px;
-    border-width: 2px;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
-    opacity: 0;
-    transform: translate(-45vw, -45vh);
-}
-
 #splash-screen.done {
     display: none;
-}
-
-@keyframes splashPulse {
-    0% { transform: scale(0.9); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(0.9); }
-}
-
-#splash-screen:not(.hidden) .splash-logo {
-    animation: splashPulse 1.5s ease-in-out infinite;
 }
 
 html.light-theme #splash-screen {

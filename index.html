@@ -360,7 +360,7 @@
             if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
             return num;
         }
-                     // ==========================================
+                // ==========================================
         // SPLASH SCREEN → HEADER LOGO TRANSITION
         // ==========================================
         window.addEventListener('load', function() {
@@ -370,20 +370,22 @@
             
             if (!splash || !splashLogo || !headerLogo) return;
 
+            // Give the images a moment to load
             setTimeout(function() {
-                // 1. Get the exact position of the header logo on screen
-                var rect = headerLogo.getBoundingClientRect();
-                var targetX = rect.left + rect.width / 2;
-                var targetY = rect.top + rect.height / 2;
                 
+                // 1. Get the exact pixel position of the header logo
+                var rect = headerLogo.getBoundingClientRect();
+                
+                // 2. Calculate the exact distance to move
                 var startX = window.innerWidth / 2;
                 var startY = window.innerHeight / 2;
+                var targetX = rect.left + (rect.width / 2);
+                var targetY = rect.top + (rect.height / 2);
                 
-                // 2. Calculate how far to move
                 var moveX = targetX - startX;
                 var moveY = targetY - startY;
                 
-                // 3. Apply the movement to the splash logo
+                // 3. Apply the transform. We need to maintain the -50% base transform AND move it.
                 splashLogo.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px)) scale(0.5)`;
                 splashLogo.style.opacity = '0';
                 splashLogo.classList.add('moving');
@@ -391,7 +393,7 @@
                 // 4. Dissolve the background
                 splash.classList.add('hidden');
                 
-                // 5. Fully remove the splash screen after the animation finishes
+                // 5. Fully remove the splash screen after the animation
                 setTimeout(function() {
                     splash.classList.add('done');
                 }, 1200);

@@ -360,7 +360,7 @@
             if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
             return num;
         }
-                   // ==========================================
+                // ==========================================
         // SPLASH SCREEN → HEADER LOGO TRANSITION
         // ==========================================
         window.addEventListener('load', function() {
@@ -383,24 +383,19 @@
                 var moveX = targetX - startX;
                 var moveY = targetY - startY;
                 
-                // 3. Apply the movement (only the translate - CSS handles shrink)
+                // 3. Apply the movement (CSS handles the fade)
                 splashLogo.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
                 
-                // 4. Add moving class which starts the shrink animation
+                // 4. Start the fade-out animation
                 splashLogo.classList.add('moving');
                 
-                // 5. Now slow dissolve the background
+                // 5. Dissolve the background
                 splash.classList.add('hidden');
                 
-                // 6. After the movement is done (2.5s), fade the logo out
-                setTimeout(function() {
-                    splashLogo.classList.add('arrived');
-                }, 2300);
-                
-                // 7. Finally, remove the splash screen after everything is over
+                // 6. Fully remove the splash screen
                 setTimeout(function() {
                     splash.classList.add('done');
-                }, 3000);
+                }, 1800);
             }, 1500);
         });
     </script>

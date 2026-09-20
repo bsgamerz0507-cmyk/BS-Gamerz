@@ -25,6 +25,7 @@
                 <button class="nav-btn" onclick="scrollToSection('videos', this)">Videos</button>
                 <button class="nav-btn" onclick="scrollToSection('shorts', this)">Shorts</button>
                 <button class="nav-btn" onclick="toggleTheme()">🌙 Theme</button>
+                <button class="nav-btn" onclick="scrollToVault(this)">🎮 Vault</button>
             </nav>
         </div>
     </header>
@@ -109,6 +110,72 @@
                 </div>
             </div>
         </div>
+            <!-- ==========================================
+         BS GAMER_Z. VAULT
+         ========================================== -->
+    <section class="vault-section">
+        <div class="vault-header">
+            <h2>🎮 BS Gamer_z. <span>Vault</span></h2>
+            <p>The gadgets I use to play, stream, and edit my videos!</p>
+        </div>
+
+        <div class="vault-grid">
+            <!-- Main Device -->
+            <div class="vault-card">
+                <div class="vault-icon">📱</div>
+                <h3>Main Device</h3>
+                <p class="vault-device">iQOO Neo 10R</p>
+                <p class="vault-spec">8GB / 256GB</p>
+                <a href="https://tinyurl.com/5fmxs4x5" target="_blank" class="vault-btn">🛒 Buy Here</a>
+            </div>
+
+            <!-- Secondary Device -->
+            <div class="vault-card">
+                <div class="vault-icon">📱</div>
+                <h3>Secondary Device</h3>
+                <p class="vault-device">VIVO T5X 5G</p>
+                <p class="vault-spec">8GB / 256GB</p>
+                <a href="https://amzn.in/d/0fxBzTmC" target="_blank" class="vault-btn">🛒 Buy Here</a>
+            </div>
+
+            <!-- Earphones -->
+            <div class="vault-card">
+                <div class="vault-icon">🎧</div>
+                <h3>Earphones</h3>
+                <p class="vault-device">Zebronics Stereo</p>
+                <p class="vault-spec">Gaming Earphone</p>
+                <a href="https://tinyurls.in/Earphone" target="_blank" class="vault-btn">🛒 Buy Here</a>
+            </div>
+
+            <!-- Screen Recorder -->
+            <div class="vault-card">
+                <div class="vault-icon">🎥</div>
+                <h3>Screen Recorder</h3>
+                <p class="vault-device">Phone In-Built</p>
+                <p class="vault-spec">Built-in Recorder</p>
+                <span class="vault-btn disabled">Built-In</span>
+            </div>
+
+            <!-- Video Editing -->
+            <div class="vault-card">
+                <div class="vault-icon">✂️</div>
+                <h3>Video Editing</h3>
+                <p class="vault-device">Phone In-Built</p>
+                <p class="vault-spec">Mobile Editing</p>
+                <span class="vault-btn disabled">Built-In</span>
+            </div>
+
+            <!-- Free Fire IDs -->
+            <div class="vault-card highlight-card">
+                <div class="vault-icon">🔥</div>
+                <h3>Free Fire ID</h3>
+                <p class="vault-device">2275191101</p>
+                <p class="vault-spec">Main ID</p>
+                <p class="vault-device">2193134126</p>
+                <p class="vault-spec">Secondary ID</p>
+            </div>
+        </div>
+    </section>
     </section>
 
     <footer>
@@ -398,6 +465,12 @@
                 }, 1800);
             }, 1500);
         });
+                // Scroll to Vault section
+        function scrollToVault(btn) {
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelector('.vault-section').scrollIntoView({ behavior: 'smooth' });
+        }
     </script>
 </body>
 </html>

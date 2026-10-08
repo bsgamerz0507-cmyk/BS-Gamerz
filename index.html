@@ -445,44 +445,56 @@
             if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
             return num;
         }
-                // ==========================================
+                 // ==========================================
         // SPLASH SCREEN → HEADER LOGO TRANSITION
         // ==========================================
-        window.addEventListener('load', function() {
+        (function() {
             var splash = document.getElementById('splash-screen');
             var splashLogo = document.querySelector('.splash-logo');
             var headerLogo = document.querySelector('.site-logo');
             
             if (!splash || !splashLogo || !headerLogo) return;
 
-            setTimeout(function() {
-                // 1. Get the exact pixel position of the header logo
-                var rect = headerLogo.getBoundingClientRect();
-                
-                // 2. Calculate the exact distance to move
-                var startX = window.innerWidth / 2;
-                var startY = window.innerHeight / 2;
-                var targetX = rect.left + (rect.width / 2);
-                var targetY = rect.top + (rect.height / 2);
-                
-                var moveX = targetX - startX;
-                var moveY = targetY - startY;
-                
-                // 3. Apply the movement (CSS handles the fade)
-                splashLogo.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
-                
-                // 4. Start the fade-out animation
-                splashLogo.classList.add('moving');
-                
-                // 5. Dissolve the background
-                splash.classList.add('hidden');
-                
-                // 6. Fully remove the splash screen
+            // Check if splash was already shown in this session
+            if (sessionStorage.getItem('splashShown') === 'true') {
+                // Skip splash screen completely
+                splash.style.display = 'none';
+                splash.classList.add('done');
+                return;
+            }
+
+            window.addEventListener('load', function() {
                 setTimeout(function() {
-                    splash.classList.add('done');
-                }, 1800);
-            }, 1500);
-        });
+                    // 1. Get the exact pixel position of the header logo
+                    var rect = headerLogo.getBoundingClientRect();
+                    
+                    // 2. Calculate the exact distance to move
+                    var startX = window.innerWidth / 2;
+                    var startY = window.innerHeight / 2;
+                    var targetX = rect.left + (rect.width / 2);
+                    var targetY = rect.top + (rect.height / 2);
+                    
+                    var moveX = targetX - startX;
+                    var moveY = targetY - startY;
+                    
+                    // 3. Apply the movement
+                    splashLogo.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
+                    
+                    // 4. Start the fade-out animation
+                    splashLogo.classList.add('moving');
+                    
+                    // 5. Dissolve the background
+                    splash.classList.add('hidden');
+                    
+                    // 6. Mark as shown and fully remove the splash screen
+                    sessionStorage.setItem('splashShown', 'true');
+                    
+                    setTimeout(function() {
+                        splash.classList.add('done');
+                    }, 1800);
+                }, 1500);
+            });
+        })();
                 // ==========================================
         // VAULT PANEL - OPEN / CLOSE
         // ==========================================

@@ -3630,3 +3630,62 @@ html.light-theme .vault-device {
         max-width: 100%;
     }
 }
+/* ==========================================
+   VAULT - MULTIPLE BUTTONS
+   ========================================== */
+.vault-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 75px;
+}
+
+.vault-buttons .vault-btn {
+    text-align: center;
+    padding: 6px 10px;
+    font-size: 11px;
+}
+
+/* IQOO Button - Blue */
+.vault-btn.iqoo-btn {
+    background: #0033a0;
+    color: #fff;
+}
+
+.vault-btn.iqoo-btn:hover {
+    background: #002277;
+    box-shadow: 0 0 10px rgba(0, 51, 160, 0.8);
+}
+
+/* Flipkart Button - Yellow/Orange */
+.vault-btn.flipkart-btn {
+    background: #f8e71c;
+    color: #222;
+}
+
+.vault-btn.flipkart-btn:hover {
+    background: #e6d400;
+    box-shadow: 0 0 10px rgba(248, 231, 28, 0.8);
+}
+
+/* VIVO Button - Blue */
+.vault-btn.vivo-btn {
+    background: #415fff;
+    color: #fff;
+}
+
+.vault-btn.vivo-btn:hover {
+    background: #2b3fd9;
+    box-shadow: 0 0 10px rgba(65, 95, 255, 0.8);
+}
+
+/* Amazon Button - Orange */
+.vault-btn.amazon-btn {
+    background: #ff9900;
+    color: #fff;
+}
+
+.vault-btn.amazon-btn:hover {
+    background: #e68a00;
+    box-shadow: 0 0 10px rgba(255, 153, 0, 0.8);
+}

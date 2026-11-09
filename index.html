@@ -58,7 +58,12 @@
             <div class="stat-label">Total Views</div>
         </div>
     </div>
-
+    <!-- FEATURED VIDEO SECTION -->
+    <section class="featured-section">
+        <div class="featured-container" id="featuredContainer">
+            <!-- The featured video will be injected here by JavaScript -->
+        </div>
+    </section>
     <div class="container">
                 <!-- SEARCH BAR -->
         <div class="search-box">
@@ -250,6 +255,8 @@
                 document.getElementById('totalAboutShorts').innerText = shortCount;
 
                 filterVideos('all'); 
+                                // Show the latest video as Featured
+                showFeaturedVideo(allVideos);
             })
             .catch(error => console.log('Could not load videos:', error));
 
@@ -513,6 +520,31 @@
             document.getElementById('vaultPanel').classList.remove('open');
             document.getElementById('vaultOverlay').classList.remove('open');
             document.body.style.overflow = ''; // Restore background scroll
+        }
+                // ==========================================
+        // FEATURED VIDEO
+        // ==========================================
+        function showFeaturedVideo(videos) {
+            if (!videos || videos.length === 0) return;
+            
+            // Get the most recent video (first in array)
+            var latest = videos[0];
+            var container = document.getElementById('featuredContainer');
+            
+            container.innerHTML = `
+                <div class="featured-thumbnail" onclick="window.open('https://www.youtube.com/watch?v=${latest.id}', '_blank')">
+                    <img src="${latest.thumbnail}" alt="${latest.title}">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="featured-info">
+                    <span class="featured-badge">🔥 Latest Upload</span>
+                    <h2>${latest.title}</h2>
+                    <div class="featured-meta">
+                        📅 ${formatDate(latest.publishedAt)} &nbsp;•&nbsp; 👁️ ${formatViews(latest.viewCount)} views
+                    </div>
+                    <a href="https://www.youtube.com/watch?v=${latest.id}" target="_blank" class="featured-btn">▶ Watch Now</a>
+                </div>
+            `;
         }
     </script>
 </body>

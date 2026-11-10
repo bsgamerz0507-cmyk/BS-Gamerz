@@ -3844,3 +3844,131 @@ html.light-theme .featured-info h2 {
 .card:hover .thumbnail img {
     transform: scale(1.08);
 }
+/* ==========================================
+   TOP 5 MOST VIEWED SECTION
+   ========================================== */
+.top-viewed-section {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.top-viewed-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.top-viewed-header h2 {
+    font-size: 32px;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.top-viewed-header h2 span {
+    color: #ff0000;
+}
+
+.top-viewed-header p {
+    color: #aaa;
+    font-size: 15px;
+}
+
+.top-viewed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.top-viewed-card {
+    background: #181818;
+    border: 2px solid #333;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.3s ease;
+    position: relative;
+}
+
+.top-viewed-card:hover {
+    border-color: #ff0000;
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+}
+
+/* Rank Badge */
+.top-viewed-card .rank-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #ff0000;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    z-index: 2;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+}
+
+.top-viewed-card .thumbnail {
+    height: 130px;
+    position: relative;
+    overflow: hidden;
+}
+
+.top-viewed-card .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.top-viewed-card .top-card-info {
+    padding: 12px;
+}
+
+.top-viewed-card h3 {
+    color: #fff;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 36px;
+}
+
+.top-viewed-card .top-meta {
+    color: #ff0000;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* Light Theme */
+html.light-theme .top-viewed-card {
+    background: #ffffff;
+    border-color: #ddd;
+}
+
+html.light-theme .top-viewed-card h3 {
+    color: #222;
+}
+
+html.light-theme .top-viewed-header h2 {
+    color: #222;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .top-viewed-header h2 {
+        font-size: 24px;
+    }
+    .top-viewed-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+}

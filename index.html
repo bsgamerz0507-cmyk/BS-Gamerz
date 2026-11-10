@@ -64,6 +64,16 @@
             <!-- The featured video will be injected here by JavaScript -->
         </div>
     </section>
+        <!-- TOP 5 MOST VIEWED SECTION -->
+    <section class="top-viewed-section">
+        <div class="top-viewed-header">
+            <h2>🔥 Top 5 Most Viewed</h2>
+            <p>My most popular videos of all time!</p>
+        </div>
+        <div class="top-viewed-grid" id="topViewedGrid">
+            <!-- Top 5 videos will be injected here -->
+        </div>
+    </section>
     <div class="container">
                 <!-- SEARCH BAR -->
         <div class="search-box">
@@ -263,6 +273,8 @@
                 filterVideos('all'); 
                                 // Show the latest video as Featured
                 showFeaturedVideo(allVideos);
+                                // Show Top 5 Most Viewed
+                showTopViewed(allVideos);
             })
             .catch(error => console.log('Could not load videos:', error));
 
@@ -567,6 +579,44 @@
             
             // Open the video on YouTube in a new tab
             window.open(`https://www.youtube.com/watch?v=${randomVideo.id}`, '_blank');
+        }
+                // ==========================================
+        // TOP 5 MOST VIEWED
+        // ==========================================
+        function showTopViewed(videos) {
+            if (!videos || videos.length === 0) return;
+            
+            // Sort videos by viewCount (highest first) and take top 5
+            var sortedVideos = [...videos]
+                .filter(v => v.viewCount)
+                .sort((a, b) => parseInt(b.viewCount) - parseInt(a.viewCount))
+                .slice(0, 5);
+            
+            var container = document.getElementById('topViewedGrid');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            sortedVideos.forEach(function(video, index) {
+                var card = document.createElement('div');
+                card.className = 'top-viewed-card';
+                card.onclick = function() {
+                    window.open(`https://www.youtube.com/watch?v=${video.id}`, '_blank');
+                };
+                
+                card.innerHTML = `
+                    <div class="rank-badge">#${index + 1}</div>
+                    <div class="thumbnail">
+                        <img src="${video.thumbnail}" alt="${video.title}">
+                    </div>
+                    <div class="top-card-info">
+                        <h3>${video.title}</h3>
+                        <div class="top-meta">👁️ ${formatViews(video.viewCount)} views</div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
         }
     </script>
 </body>

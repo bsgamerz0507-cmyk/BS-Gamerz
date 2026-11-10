@@ -74,6 +74,12 @@
             <button class="category" onclick="filterVideos('video')">🎬 Videos</button>
             <button class="category" onclick="filterVideos('short')">📱 Shorts</button>
         </div>
+        <!-- RANDOM VIDEO BUTTON -->
+        <div style="text-align: center; margin: 20px 0;">
+            <button class="watch-btn" onclick="playRandomVideo()" style="font-size: 16px; padding: 12px 25px; cursor: pointer; border: none;">
+                🎲 I'm Feeling Lucky (Random Video)
+            </button>
+        </div>
 
         <div class="content-grid" id="videoGrid">
         </div>
@@ -545,6 +551,22 @@
                     <a href="https://www.youtube.com/watch?v=${latest.id}" target="_blank" class="featured-btn">▶ Watch Now</a>
                 </div>
             `;
+        }
+                // ==========================================
+        // RANDOM VIDEO BUTTON
+        // ==========================================
+        function playRandomVideo() {
+            if (!allVideos || allVideos.length === 0) {
+                alert("Videos not loaded yet. Please wait a moment.");
+                return;
+            }
+            
+            // Pick a random video from all videos
+            var randomIndex = Math.floor(Math.random() * allVideos.length);
+            var randomVideo = allVideos[randomIndex];
+            
+            // Open the video on YouTube in a new tab
+            window.open(`https://www.youtube.com/watch?v=${randomVideo.id}`, '_blank');
         }
     </script>
 </body>

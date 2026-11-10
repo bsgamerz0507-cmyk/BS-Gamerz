@@ -3099,10 +3099,7 @@ html.light-theme .card-meta .content-type {
     pointer-events: none; /* Prevents clicking inside the preview */
 }
 
-/* Hide the anchor when preview is playing */
-.thumbnail:hover a {
-    display: none;
-}
+
 /* YouTube Preview Iframe */
 .thumbnail iframe {
     width: 100%;
@@ -3111,10 +3108,7 @@ html.light-theme .card-meta .content-type {
     pointer-events: none; /* Prevents clicking inside the preview */
 }
 
-/* Hide the anchor when preview is playing */
-.thumbnail:hover a {
-    display: none;
-}
+
 /* ==========================================
    SPLASH SCREEN → HEADER LOGO TRANSITION
    ========================================== */
@@ -3835,4 +3829,18 @@ html.light-theme .featured-info h2 {
     .featured-info h2 {
         font-size: 20px;
     }
+}
+/* ==========================================
+   SAFE THUMBNAIL HOVER EFFECT
+   ========================================== */
+.thumbnail {
+    overflow: hidden;
+}
+
+.thumbnail img {
+    transition: transform 0.3s ease;
+}
+
+.card:hover .thumbnail img {
+    transform: scale(1.08);
 }
